@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.server.name }}"
+    heritage: "{{ .Release.Service }}"
+    release: "{{ .Release.Name }}"
+  name: {{ template "fullname" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.service.tcpPort }}
+    targetPort: 53
+    protocol: TCP
+    name: "tcp-{{ .Values.service.name }}"
+  - port: {{ .Values.service.udpPort }}
+    targetPort: 53
+    protocol: UDP
+    name: "udp-{{ .Values.service.name }}"
+  - port: {{ .Values.service.externalPort }}
+    targetPort: 80
+    protocol: TCP
+    name: "web-{{ .Values.service.name }}"
+  selector:
+    app: {{ template "fullname" . }}

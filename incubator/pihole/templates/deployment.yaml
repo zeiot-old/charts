@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "{{ .Values.server.name }}"
+    heritage: "{{ .Release.Service }}"
+    release: "{{ .Release.Name }}"
+  name: {{ template "fullname" . }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+        ports:
+        - name: dns
+          containerPort: 53
+        - name: web
+          containerPort: 80
+        env:
+            - name: ServerIP
+              value: {{ default "" .Values.server.ip | quote }}
+        {{- if .Values.custom.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        {{- end }}

@@ -1,0 +1,17 @@
+{{- if .Values.custom.ingress -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: {{ template "fullname" . }}
+    labels:
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Values.service.name }}
+              servicePort: {{ .Values.service.internalPort }}
+{{- end -}}
