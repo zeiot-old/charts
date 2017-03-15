@@ -96,8 +96,8 @@ server:
     #   cpu: 500m
     #   memory: 512Mi
     requests:
-      cpu: 100m
-      memory: 100Mi
+      cpu: 500m
+      memory: 512Mi
 
   ## Grafana service type
   ##
