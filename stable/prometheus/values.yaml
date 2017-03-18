@@ -8,7 +8,8 @@ image:
   pullPolicy: IfNotPresent
   command:
 service:
-  type: ClusterIP
+  type: NodePort
+  # type: ClusterIP
   externalPort: 80
   internalPort: 9090
   externalIPs:
@@ -35,8 +36,8 @@ health:
     initialDelaySeconds: 60
   readinessProbe:
     timeoutSeconds: 10
-nodeSelector:
-  beta.kubernetes.io/arch: amd64
+# nodeSelector:
+#   beta.kubernetes.io/arch: amd64
 custom:
   resources: true
   persistentVolume: true

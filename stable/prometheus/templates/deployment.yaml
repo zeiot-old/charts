@@ -13,12 +13,12 @@ spec:
     spec:
       {{- if .Values.custom.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 10 }}        
+{{ toYaml .Values.nodeSelector | indent 10 }}
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         command:
-          - /bin/prometheus
+          - /usr/bin/prometheus
           - -config.file=/etc/prometheus/prometheus.yml
           - -storage.local.path=/prometheus
           - -web.console.libraries=/etc/prometheus/console_libraries
@@ -63,4 +63,3 @@ spec:
         {{- else }}
         emptyDir: {}
         {{- end -}}
-        
