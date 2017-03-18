@@ -101,7 +101,7 @@ server:
 
   ## Grafana service type
   ##
-  serviceType: ClusterIP
+  serviceType: NodePort
 
   ## Grafana local config path
   ## Default '/etc/grafana'
