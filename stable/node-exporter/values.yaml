@@ -1,0 +1,32 @@
+# Customize
+custom:
+  resources: true
+  healthProbe: true
+
+# Docker Image
+image:
+  repository: zeiot/rpi-node_exporter
+  tag: 0.13.0
+  pullPolicy: IfNotPresent
+
+# Kubernetes service
+service:
+  externalPort: 9100
+  internalPort: 9100
+
+# Deployment resources limits
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 500m
+    memory: 128Mi
+
+# Deployment liveness/readiness probes
+health:
+  livenessProbe:
+    timeoutSeconds: 10
+    initialDelaySeconds: 60
+  readinessProbe:
+    timeoutSeconds: 10
