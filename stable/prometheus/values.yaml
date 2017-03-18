@@ -1,0 +1,44 @@
+# Default values for prometheus.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: zeiot/rpi-prometheus
+  tag: 1.5.2
+  pullPolicy: IfNotPresent
+  command:
+service:
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 9090
+  externalIPs:
+    - 192.168.20.10
+resources:
+  limits:
+    cpu: 1
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+prometheus:
+  memoryChunks: 120000
+volumes:
+  data:
+    hostPath:
+      path: /opt/nas/prometheus/data
+  config:
+    hostPath:
+      path: /opt/nas/prometheus/etc
+health:
+  livenessProbe:
+    timeoutSeconds: 10
+    initialDelaySeconds: 60
+  readinessProbe:
+    timeoutSeconds: 10
+nodeSelector:
+  beta.kubernetes.io/arch: amd64
+custom:
+  resources: true
+  persistentVolume: true
+  nodeSelector: true
+  healthProbe: true
